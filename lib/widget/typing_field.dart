@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class login_email extends StatelessWidget {
+class typing_field extends StatelessWidget {
   final String Title;
   final Color TitleColor;
   //login background values
 
-  const login_email({super.key, 
+  const typing_field({super.key, 
     required this.Title,
     required this.TitleColor,
   });
