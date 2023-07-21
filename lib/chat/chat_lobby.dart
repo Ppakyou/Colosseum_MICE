@@ -1,21 +1,66 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:localtest_1/chat/message.dart';
+import 'package:localtest_1/chat/new_message.dart';
 
-class Chat_lobby extends StatefulWidget {
-  const Chat_lobby({super.key});
+class ChatScreen extends StatefulWidget {
+  const ChatScreen({Key? key}) : super(key: key);
 
   @override
-  State<Chat_lobby> createState() => _Chat_lobby();
+  _ChatScreenState createState() => _ChatScreenState();
 }
 
-class _Chat_lobby extends State<Chat_lobby> {
+class _ChatScreenState extends State<ChatScreen> {
+  final _authentication = FirebaseAuth.instance;
+  User? loggedUser;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getCurrentUser();
+  }
+
+  void getCurrentUser() {
+    try {
+      final user = _authentication.currentUser;
+      if (user != null) {
+        loggedUser = user;
+        print(loggedUser!.email);
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Chat screen'),
+      appBar: AppBar(
+        title: const Text('Chat screen'),
+        actions: [
+          IconButton(
+            icon: const Icon(
+              Icons.exit_to_app_sharp,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              _authentication.signOut();
+              //Navigator.pop(context);
+            },
+          )
+        ],
+      ),
+      body: Container(
+        child: const Column(
+          children: [
+            Expanded(
+              child: Messages(),
+            ),
+            NewMessage(),
+          ],
         ),
-        body: const Center(
-          child: Text('Chat screen'),
-        ));
+      ),
+    );
   }
 }
