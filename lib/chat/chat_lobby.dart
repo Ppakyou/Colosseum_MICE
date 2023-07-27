@@ -37,10 +37,10 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Chat screen'),
+        title: Text('Chat screen'),
         actions: [
           IconButton(
-            icon: const Icon(
+            icon: Icon(
               Icons.exit_to_app_sharp,
               color: Colors.white,
             ),
@@ -52,7 +52,7 @@ class _ChatScreenState extends State<ChatScreen> {
         ],
       ),
       body: Container(
-        child: const Column(
+        child: Column(
           children: [
             Expanded(
               child: Messages(),

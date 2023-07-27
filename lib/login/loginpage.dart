@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:localtest_1/palette/palette_login.dart';
-import 'package:localtest_1/add_image/add_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:localtest_1/chat/chat_lobby.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
@@ -30,15 +29,6 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
     }
   }
 
-  void showAlert(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return const Dialog(backgroundColor: Colors.white, child: AddImage());
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,19 +47,20 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                 left: 0,
                 child: Container(
                   height: 300,
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
                     image: DecorationImage(
-                        image: AssetImage('image/red.jpg'), fit: BoxFit.fill),
+                        image: AssetImage('assets/image/mqdl_test.png'),
+                        fit: BoxFit.fill),
                   ),
                   child: Container(
-                    padding: const EdgeInsets.only(top: 90, left: 20),
+                    padding: EdgeInsets.only(top: 90, left: 20),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         RichText(
                           text: TextSpan(
                             text: 'Welcome',
-                            style: const TextStyle(
+                            style: TextStyle(
                                 letterSpacing: 1.0,
                                 fontSize: 25,
                                 color: Colors.white),
@@ -78,7 +69,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                                 text: isSignupScreen
                                     ? ' to Yummy chat!'
                                     : ' back',
-                                style: const TextStyle(
+                                style: TextStyle(
                                   letterSpacing: 1.0,
                                   fontSize: 25,
                                   color: Colors.white,
@@ -88,14 +79,14 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                             ],
                           ),
                         ),
-                        const SizedBox(
+                        SizedBox(
                           height: 5.0,
                         ),
                         Text(
                           isSignupScreen
                               ? 'Signup to continue'
                               : 'Signin to continue',
-                          style: const TextStyle(
+                          style: TextStyle(
                             letterSpacing: 1.0,
                             color: Colors.white,
                           ),
@@ -107,16 +98,16 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
               ),
               //배경
               AnimatedPositioned(
-                duration: const Duration(milliseconds: 500),
+                duration: Duration(milliseconds: 500),
                 curve: Curves.easeIn,
                 top: 180,
                 child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 500),
+                  duration: Duration(milliseconds: 500),
                   curve: Curves.easeIn,
-                  padding: const EdgeInsets.all(20.0),
+                  padding: EdgeInsets.all(20.0),
                   height: isSignupScreen ? 280.0 : 250.0,
                   width: MediaQuery.of(context).size.width - 40,
-                  margin: const EdgeInsets.symmetric(horizontal: 20.0),
+                  margin: EdgeInsets.symmetric(horizontal: 20.0),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(15.0),
@@ -128,7 +119,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                     ],
                   ),
                   child: SingleChildScrollView(
-                    padding: const EdgeInsets.only(bottom: 20),
+                    padding: EdgeInsets.only(bottom: 20),
                     child: Column(
                       children: [
                         Row(
@@ -153,7 +144,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                                   ),
                                   if (!isSignupScreen)
                                     Container(
-                                      margin: const EdgeInsets.only(top: 3),
+                                      margin: EdgeInsets.only(top: 3),
                                       height: 2,
                                       width: 55,
                                       color: Colors.orange,
@@ -169,37 +160,18 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                               },
                               child: Column(
                                 children: [
-                                  Row(
-                                    children: [
-                                      Text(
-                                        'SIGNUP',
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold,
-                                            color: isSignupScreen
-                                                ? Palette.activeColor
-                                                : Palette.textColor1),
-                                      ),
-                                      const SizedBox(
-                                        width: 15,
-                                      ),
-                                      GestureDetector(
-                                        onTap: () {
-                                          showAlert(context);
-                                        },
-                                        child: Icon(
-                                          Icons.image,
-                                          color: isSignupScreen
-                                              ? Colors.cyan
-                                              : Colors.grey[300],
-                                        ),
-                                      )
-                                    ],
+                                  Text(
+                                    'SIGNUP',
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                        color: isSignupScreen
+                                            ? Palette.activeColor
+                                            : Palette.textColor1),
                                   ),
                                   if (isSignupScreen)
                                     Container(
-                                      margin: const EdgeInsets.fromLTRB(
-                                          0, 3, 35, 0),
+                                      margin: EdgeInsets.only(top: 3),
                                       height: 2,
                                       width: 55,
                                       color: Colors.orange,
@@ -211,13 +183,13 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                         ),
                         if (isSignupScreen)
                           Container(
-                            margin: const EdgeInsets.only(top: 20),
+                            margin: EdgeInsets.only(top: 20),
                             child: Form(
                               key: _formKey,
                               child: Column(
                                 children: [
                                   TextFormField(
-                                    key: const ValueKey(1),
+                                    key: ValueKey(1),
                                     validator: (value) {
                                       if (value!.isEmpty || value.length < 4) {
                                         return 'Please enter at least 4 characters';
@@ -230,7 +202,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                                     onChanged: (value) {
                                       userName = value;
                                     },
-                                    decoration: const InputDecoration(
+                                    decoration: InputDecoration(
                                         prefixIcon: Icon(
                                           Icons.account_circle,
                                           color: Palette.iconColor,
@@ -255,12 +227,12 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                                             color: Palette.textColor1),
                                         contentPadding: EdgeInsets.all(10)),
                                   ),
-                                  const SizedBox(
+                                  SizedBox(
                                     height: 8,
                                   ),
                                   TextFormField(
                                     keyboardType: TextInputType.emailAddress,
-                                    key: const ValueKey(2),
+                                    key: ValueKey(2),
                                     validator: (value) {
                                       if (value!.isEmpty ||
                                           !value.contains('@')) {
@@ -274,7 +246,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                                     onChanged: (value) {
                                       userEmail = value;
                                     },
-                                    decoration: const InputDecoration(
+                                    decoration: InputDecoration(
                                         prefixIcon: Icon(
                                           Icons.email,
                                           color: Palette.iconColor,
@@ -299,12 +271,12 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                                             color: Palette.textColor1),
                                         contentPadding: EdgeInsets.all(10)),
                                   ),
-                                  const SizedBox(
+                                  SizedBox(
                                     height: 8,
                                   ),
                                   TextFormField(
                                     obscureText: true,
-                                    key: const ValueKey(3),
+                                    key: ValueKey(3),
                                     validator: (value) {
                                       if (value!.isEmpty || value.length < 6) {
                                         return 'Password must be at least 7 characters long.';
@@ -317,7 +289,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                                     onChanged: (value) {
                                       userPassword = value;
                                     },
-                                    decoration: const InputDecoration(
+                                    decoration: InputDecoration(
                                         prefixIcon: Icon(
                                           Icons.lock,
                                           color: Palette.iconColor,
@@ -348,13 +320,13 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                           ),
                         if (!isSignupScreen)
                           Container(
-                            margin: const EdgeInsets.only(top: 20),
+                            margin: EdgeInsets.only(top: 20),
                             child: Form(
                               key: _formKey,
                               child: Column(
                                 children: [
                                   TextFormField(
-                                    key: const ValueKey(4),
+                                    key: ValueKey(4),
                                     validator: (value) {
                                       if (value!.isEmpty ||
                                           !value.contains('@')) {
@@ -368,7 +340,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                                     onChanged: (value) {
                                       userEmail = value;
                                     },
-                                    decoration: const InputDecoration(
+                                    decoration: InputDecoration(
                                         prefixIcon: Icon(
                                           Icons.email,
                                           color: Palette.iconColor,
@@ -393,11 +365,11 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                                             color: Palette.textColor1),
                                         contentPadding: EdgeInsets.all(10)),
                                   ),
-                                  const SizedBox(
+                                  SizedBox(
                                     height: 8.0,
                                   ),
                                   TextFormField(
-                                    key: const ValueKey(5),
+                                    key: ValueKey(5),
                                     validator: (value) {
                                       if (value!.isEmpty || value.length < 6) {
                                         return 'Password must be at least 7 characters long.';
@@ -410,7 +382,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                                     onChanged: (value) {
                                       userPassword = value;
                                     },
-                                    decoration: const InputDecoration(
+                                    decoration: InputDecoration(
                                         prefixIcon: Icon(
                                           Icons.lock,
                                           color: Palette.iconColor,
@@ -446,14 +418,14 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
               ),
               //텍스트 폼 필드
               AnimatedPositioned(
-                duration: const Duration(milliseconds: 500),
+                duration: Duration(milliseconds: 500),
                 curve: Curves.easeIn,
                 top: isSignupScreen ? 430 : 390,
                 right: 0,
                 left: 0,
                 child: Center(
                   child: Container(
-                    padding: const EdgeInsets.all(15),
+                    padding: EdgeInsets.all(15),
                     height: 90,
                     width: 90,
                     decoration: BoxDecoration(
@@ -485,7 +457,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) {
-                                    return const ChatScreen();
+                                    return ChatScreen();
                                   },
                                 ),
                               );
@@ -496,7 +468,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                           } catch (e) {
                             print(e);
                             ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
+                              SnackBar(
                                 content: Text(
                                     'Please check your email and password'),
                                 backgroundColor: Colors.blue,
@@ -539,7 +511,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                       },
                       child: Container(
                         decoration: BoxDecoration(
-                          gradient: const LinearGradient(
+                          gradient: LinearGradient(
                               colors: [Colors.orange, Colors.red],
                               begin: Alignment.topLeft,
                               end: Alignment.bottomRight),
@@ -549,11 +521,11 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                               color: Colors.black.withOpacity(0.3),
                               spreadRadius: 1,
                               blurRadius: 1,
-                              offset: const Offset(0, 1),
+                              offset: Offset(0, 1),
                             ),
                           ],
                         ),
-                        child: const Icon(
+                        child: Icon(
                           Icons.arrow_forward,
                           color: Colors.white,
                         ),
@@ -564,7 +536,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
               ),
               //전송버튼
               AnimatedPositioned(
-                duration: const Duration(milliseconds: 500),
+                duration: Duration(milliseconds: 500),
                 curve: Curves.easeIn,
                 top: isSignupScreen
                     ? MediaQuery.of(context).size.height - 125
@@ -574,19 +546,19 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                 child: Column(
                   children: [
                     Text(isSignupScreen ? 'or Signup with' : 'or Signin with'),
-                    const SizedBox(
+                    SizedBox(
                       height: 10,
                     ),
                     TextButton.icon(
                       onPressed: () {},
                       style: TextButton.styleFrom(
-                          foregroundColor: Colors.white,
-                          minimumSize: const Size(155, 40),
+                          primary: Colors.white,
+                          minimumSize: Size(155, 40),
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20)),
                           backgroundColor: Palette.googleColor),
-                      icon: const Icon(Icons.add),
-                      label: const Text('Google'),
+                      icon: Icon(Icons.add),
+                      label: Text('Google'),
                     ),
                   ],
                 ),
