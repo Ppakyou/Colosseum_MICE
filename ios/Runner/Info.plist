@@ -47,5 +47,18 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	    <key>CFBundleURLTypes</key>
+    <array>
+      <dict>
+      <key>CFBundleURLSchemes</key>
+      <array>
+        <!-- facebook login -->
+        <!-- <string>fbAPP-ID</string> -->
+
+        <!-- google login -->
+        <string>com.googleusercontent.apps.692448064694-ur3qaecf4fqs4qd1isiu8jjot0qde5oo</string>
+      </array>
+      </dict>
+    </array>
 </dict>
 </plist>

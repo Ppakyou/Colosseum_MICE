@@ -20,7 +20,7 @@ class ChatBubbles extends StatelessWidget {
             child: ChatBubble(
               clipper: ChatBubbleClipper8(type: BubbleType.sendBubble),
               alignment: Alignment.topRight,
-              margin: const EdgeInsets.only(top: 20),
+              margin: EdgeInsets.only(top: 20),
               backGroundColor: Colors.blue,
               child: Container(
                 constraints: BoxConstraints(
@@ -32,12 +32,12 @@ class ChatBubbles extends StatelessWidget {
                   children: [
                     Text(
                       userName,
-                      style: const TextStyle(
+                      style: TextStyle(
                           fontWeight: FontWeight.bold, color: Colors.white),
                     ),
                     Text(
                       message,
-                      style: const TextStyle(color: Colors.white),
+                      style: TextStyle(color: Colors.white),
                     ),
                   ],
                 ),
@@ -49,8 +49,8 @@ class ChatBubbles extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
             child: ChatBubble(
               clipper: ChatBubbleClipper8(type: BubbleType.receiverBubble),
-              backGroundColor: const Color(0xffE7E7ED),
-              margin: const EdgeInsets.only(top: 20),
+              backGroundColor: Color(0xffE7E7ED),
+              margin: EdgeInsets.only(top: 20),
               child: Container(
                 constraints: BoxConstraints(
                   maxWidth: MediaQuery.of(context).size.width * 0.7,
@@ -61,14 +61,14 @@ class ChatBubbles extends StatelessWidget {
                   children: [
                     Text(
                       userName,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
                       ),
                     ),
                     Text(
                       message,
-                      style: const TextStyle(color: Colors.black),
+                      style: TextStyle(color: Colors.black),
                     ),
                   ],
                 ),

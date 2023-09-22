@@ -5,6 +5,11 @@ import 'package:localtest_1/chat/chat_lobby.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+//구글 로그인 추가 사항
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:localtest_1/login/google_sign_in_api.dart';
+import 'dart:developer' as developer;
+
 class LoginSignupScreen extends StatefulWidget {
   const LoginSignupScreen({Key? key}) : super(key: key);
 
@@ -21,6 +26,99 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
   String userName = '';
   String userEmail = '';
   String userPassword = '';
+
+  //구글 로그인 채팅창 에러 고치는 파트====
+
+  bool isBlockingActions = false;
+
+  //============================
+
+  //구글 로그인 추가 사항==================
+  Future<UserCredential?> loginWithGoogle(BuildContext context) async {
+    GoogleSignInAccount? user = await GoogleSignInApi.login();
+
+    GoogleSignInAuthentication? googleAuth = await user!.authentication;
+    var credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
+
+    UserCredential? userCredential =
+        await FirebaseAuth.instance.signInWithCredential(credential);
+
+    if (userCredential != null) {
+      if (userName.isEmpty) {
+        String userName = '';
+        void showPersistentBottomSheet(BuildContext context) {
+          showModalBottomSheet(
+            context: context,
+            isScrollControlled: true,
+            builder: (BuildContext context) {
+              return Container(
+                padding: EdgeInsets.all(16),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Row(
+                      children: [
+                        Icon(Icons.warning, color: Colors.yellow),
+                        SizedBox(width: 10),
+                        Expanded(
+                          child: TextField(
+                            decoration: InputDecoration(
+                              hintText: 'Enter your name',
+                              border: InputBorder.none,
+                            ),
+                            onChanged: (text) {
+                              setState(() {
+                                userName = text;
+                              });
+                            },
+                          ),
+                        ),
+                        SizedBox(width: 10),
+                        ElevatedButton(
+                          onPressed: () {
+                            // Do something with the entered name
+                            // e.g., you can call loginWithGoogleWithName(userName);
+                            Navigator.pop(context); // Close the bottom sheet
+                          },
+                          child: Text('Submit'),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              );
+            },
+          );
+          //   void _handleButtonPress(BuildContext context) {
+          //   if (!isBlockingActions) {
+          //     setState(() {
+          //       isBlockingActions = true;
+          //     });
+
+          //     showPersistentBottomSheet(context).whenComplete(() {
+          //       setState(() {
+          //         isBlockingActions = false;
+          //       });
+          //     });
+          //   }
+          // }
+        }
+      }
+
+      print('로그인 성공 === Google');
+      print(userCredential);
+
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => ChatScreen()));
+    } else {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('로그인 실패 === Google')));
+    }
+
+    return userCredential;
+  }
+  //=====================
 
   void _tryValidation() {
     final isValid = _formKey.currentState!.validate();
@@ -67,7 +165,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                             children: [
                               TextSpan(
                                 text: isSignupScreen
-                                    ? ' to Yummy chat!'
+                                    ? ' to chat Colosseum!'
                                     : ' back',
                                 style: TextStyle(
                                   letterSpacing: 1.0,
@@ -369,6 +467,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                                     height: 8.0,
                                   ),
                                   TextFormField(
+                                    obscureText: true,
                                     key: ValueKey(5),
                                     validator: (value) {
                                       if (value!.isEmpty || value.length < 6) {
@@ -550,7 +649,10 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                       height: 10,
                     ),
                     TextButton.icon(
-                      onPressed: () {},
+                      // onPressed: () async{},
+                      onPressed: () async {
+                        await loginWithGoogle(context);
+                      },
                       style: TextButton.styleFrom(
                           primary: Colors.white,
                           minimumSize: Size(155, 40),
